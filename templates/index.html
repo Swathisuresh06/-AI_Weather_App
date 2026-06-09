@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Weather App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>🌦 AI Weather App</h1>
+    <form method="POST">
+       <input type="text" name="city" placeholder="Enter city name..." required>
+    
+       <button type="submit">Check Weather</button>
+    
+    
+      <button type="button" onclick="getLocation()">📍 Use My Location</button>
+      <button type="button" onclick="startVoice()">🎤 Speak City</button>
+    </form>
+    
+
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+
+    {% if weather %}
+        <div class="weather-box">
+            <h2>{{ weather.icon }} {{ weather.city }}</h2>
+            <p>🌡 Temperature: {{ weather.temp }} °C</p>
+            <p>💧 Humidity: {{ weather.humidity }}%</p>
+            <p>☁ Condition: {{ weather.condition }}</p>
+
+            <div class="recommendation">
+                 <h3>🤖 Recommendation</h3>
+                 <p>{{ weather.recommendation }}</p>
+
+                 <h4>👕 Clothing Suggestion</h4>
+                 <p>{{ weather.clothes }}</p>
+
+                 <h4>🍲 Food Suggestion</h4>
+                 <p>{{ weather.food }}</p>
+            </div>
+            <h3>📊 5-Day Forecast</h3>
+
+            <div class="forecast">
+                {% for f in weather.forecast %}
+                     <div class="forecast-card">
+                         <p>🌡 {{ f.temp }} °C</p>
+                         <p>{{ f.condition }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+</div>
+<script>
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+        alert("Geolocation not supported");
+    }
+}
+
+function showPosition(position) {
+    let lat = position.coords.latitude;
+    let lon = position.coords.longitude;
+
+    window.location.href = `/location?lat=${lat}&lon=${lon}`;
+}
+</script>
+<script>
+function startVoice() {
+    const recognition = new webkitSpeechRecognition();
+    recognition.lang = "en-US";
+
+    recognition.onresult = function(event) {
+        let speechText = event.results[0][0].transcript;
+        document.querySelector("input[name='city']").value = speechText;
+
+        document.querySelector("form").submit(); // auto search
+    };
+
+    recognition.start();
+}
+</script>
+</body>
+</html>
