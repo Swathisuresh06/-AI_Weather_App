@@ -2,10 +2,8 @@ from flask import Flask, render_template, request
 import requests
 
 app = Flask(__name__)
-import os
 
-API_KEY = os.environ.get("95c287908cb0a660ae025b93df88fe7e")
-
+API_KEY = "95c287908cb0a660ae025b93df88fe7e"
 
 @app.route("/", methods=["GET", "POST"])
 def index():
