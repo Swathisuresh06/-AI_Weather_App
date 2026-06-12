@@ -9,7 +9,8 @@
 <div class="container">
 
     <h1>🌦 AI Weather App</h1>
-    <form method="POST">
+    <form action="/" method="POST">
+    
        <input type="text" name="city" placeholder="Enter city name..." required>
     
        <button type="submit">Check Weather</button>
@@ -80,6 +81,7 @@ function startVoice() {
         let speechText = event.results[0][0].transcript;
         document.querySelector("input[name='city']").value = speechText;
 
+        document.querySelector("form").action = "/";
         document.querySelector("form").submit(); // auto search
     };
 
