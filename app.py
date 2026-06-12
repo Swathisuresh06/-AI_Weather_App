@@ -92,7 +92,7 @@ def index():
             print(e)
 
     return render_template("index.html", weather=weather, error=error)
-@app.route("/location")
+@app.route("/location", methods=["GET", "POST"])
 def location():
     lat = request.args.get("lat")
     lon = request.args.get("lon")
