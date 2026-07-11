@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>AI Weather App</title>
+    <title>Weather Result</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
 <div class="container">
 
-    <h1>🌦 AI Weather App</h1>
+    <h1 style="color:rgb(237, 236, 244);">AI - Weather Recommendation</h1>
     <form action="/" method="POST">
     
        <input type="text" name="city" placeholder="Enter city name..." required>
@@ -41,6 +41,10 @@
 
                  <h4>🍲 Food Suggestion</h4>
                  <p>{{ weather.food }}</p>
+            </div>
+            <div class="ai-box">
+                 <h3>🤖 Gemini AI Recommendation</h3>
+                 <p>{{ weather.ai_advice }}</p>
             </div>
             <h3>📊 5-Day Forecast</h3>
 

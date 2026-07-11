@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weather Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="result-container">
+
+    <h1>🌦 AI Weather Result</h1>
+    <a href="/" class="back-btn">⬅ Back to Home</a>
+
+    <div class="weather-card">
+
+        <h2>{{ weather.icon }} {{ weather.city }}</h2>
+
+        <h1 class="temp">{{ weather.temp }}°C</h1>
+
+        <p class="condition">{{ weather.condition }}</p>
+
+        <div class="details">
+            <p>💧 Humidity: {{ weather.humidity }}%</p>
+        </div>
+
+    </div>
+
+    <div class="ai-card">
+       <h2>🤖 Gemini AI Recommendation</h2>
+
+       <div class="ai-content">
+           {{ weather.ai_advice|safe }}
+       </div>
+    </div>
+    
+    <div class="forecast-card-big">
+
+        <h2>📅 5-Day Forecast</h2>
+
+        <div class="forecast">
+
+            {% for f in weather.forecast %}
+
+            <div class="forecast-card">
+
+               <h3>{{ f.day }}</h3>
+
+               <p>
+               {% if f.condition=="Rain" %}
+        🌧
+               {% elif f.condition=="Clouds" %}
+        ☁
+               {% elif f.condition=="Clear" %}
+        ☀
+               {% else %}
+        🌤
+               {% endif %}
+               </p>
+
+               <h2>{{ f.temp }}°C</h2>
+
+               <p>{{ f.condition }}</p>
+
+       </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
